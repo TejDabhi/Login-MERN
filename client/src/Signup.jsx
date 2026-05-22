@@ -15,7 +15,7 @@ const Signup = () => {
   // Check User Already Logged In
   useEffect(() => {
 
-    axios.get('http://localhost:3001/home')
+    axios.get('https://login-mern-nuwl.onrender.com/home')
 
       .then(() => {
 
@@ -35,7 +35,7 @@ const Signup = () => {
 
     e.preventDefault()
 
-    axios.post('http://localhost:3001/register', {
+    axios.post('https://login-mern-nuwl.onrender.com/register', {
       email,
       password
     })
