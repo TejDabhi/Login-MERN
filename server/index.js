@@ -41,10 +41,6 @@ const PORT = process.env.PORT || 3001
 mongoose.connect("mongodb+srv://tej:tej123@cluster0.2lbv03r.mongodb.net/test")
 .then(() => {
     console.log("MongoDB Connected")
-
-    app.listen(PORT, () => {
-        console.log(`Server Running on Port ${PORT}`)
-    })
 })
 .catch((err) => {
     console.log("MongoDB Connection Error:", err.message)
@@ -349,5 +345,7 @@ app.get('/logout', (req, res) => {
 
 })
 
-
+app.listen(PORT, () => {
+    console.log(`Server Running on Port ${PORT}`)
+})
 
