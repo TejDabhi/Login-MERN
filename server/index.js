@@ -54,10 +54,26 @@ const EmployeeModel = require('./models/Employee.js')
 
 
 
+
 app.get("/", (req, res) => {
     res.json({
         message: "Backend is running"
     })
+})
+app.get('/test-db', async (req, res) => {
+    try {
+        const users = await EmployeeModel.find()
+
+        res.json({
+            message: "DB working",
+            count: users.length
+        })
+    } catch (error) {
+        res.status(500).json({
+            message: "DB not working",
+            error: error.message
+        })
+    }
 })
 // ================= REGISTER =================
 
@@ -191,7 +207,7 @@ app.post('/forgot-password', async (req, res) => {
             to: email,
             subject: 'Reset Password',
             // Send ID + Token
-            text: `https://login-mern.vercel.app/resetPassword/${user._id}/${token}`
+            text: `https://login-mern-gray.vercel.app/resetPassword/${user._id}/${token}`
         }
         // Send Mail
         transporter.sendMail(mailOptions, function (error, info) {
