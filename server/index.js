@@ -10,7 +10,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cors({
-    origin: "https://login-mern-mauve.vercel.app",
+    origin: "*",
     methods:['GET','POST'],
     credentials:true
 }))
