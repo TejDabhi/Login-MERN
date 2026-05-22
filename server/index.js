@@ -294,8 +294,8 @@ app.get('/logout', (req, res) => {
 
 // ================= SERVER =================
 
-app.listen(3001, () => {
+const PORT = process.env.PORT || 3001
 
-    console.log("Server Running on Port 3001")
-
+app.listen(PORT, () => {
+    console.log(`Server Running on Port ${PORT}`)
 })
