@@ -34,7 +34,7 @@ const Login = () => {
 
     e.preventDefault()
 
-    axios.post('http://localhost:3001/login', {
+    axios.post('https://login-mern-nuwl.onrender.com/login', {
       email,
       password
     })
