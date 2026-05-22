@@ -8,7 +8,7 @@ function Home() {
 
   const handleLogout = () => {
 
-    axios.get('http://localhost:3001/logout', {
+    axios.get('https://login-mern-nuwl.onrender.com/logout', {
 
       withCredentials: true
 
