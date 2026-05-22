@@ -9,12 +9,14 @@ const nodemailer = require('nodemailer');
 const app = express()
 
 app.use(express.json())
+app.use(cookieParser())
+
 app.use(cors({
-    origin: "*",
+    origin: "https://login-mern-gray.vercel.app",
     methods:['GET','POST'],
     credentials:true
 }))
-app.use(cookieParser())
+
 
 // MongoDB Connection
 mongoose.connect("mongodb+srv://tej:tej123@cluster0.2lbv03r.mongodb.net/test")
