@@ -115,12 +115,12 @@ const Login = () => {
 
           <div className="flex justify-end text-sm">
 
-            <a
-                href="/forgotPassword"
-                className="text-blue-500 hover:underline"
+            <span
+              onClick={() => navigate('/forgotPassword')}
+              className="text-blue-500 hover:underline cursor-pointer"
             >
-                Forgot Password?
-            </a>
+              Forgot Password?
+            </span>
 
            </div>
 
