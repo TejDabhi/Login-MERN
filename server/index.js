@@ -153,7 +153,7 @@ app.post('/forgot-password', async (req, res) => {
             to: email,
             subject: 'Reset Password',
             // Send ID + Token
-            text: `https://your-vercel-app.vercel.app/resetPassword/${user._id}/${token}`
+            text: `https://login-mern.vercel.app/resetPassword/${user._id}/${token}`
         }
         // Send Mail
         transporter.sendMail(mailOptions, function (error, info) {
