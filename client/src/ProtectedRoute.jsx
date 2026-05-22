@@ -9,7 +9,7 @@ const ProtectedRoute = ({ children }) => {
     const [auth, setAuth] = useState(null)
 
     useEffect(() => {
-        axios.get('http://localhost:3001/home', {
+        axios.get('https://login-mern-nuwl.onrender.com/home', {
             withCredentials: true
         })
         .then(() => setAuth(true))
