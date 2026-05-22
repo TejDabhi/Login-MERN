@@ -144,7 +144,7 @@ app.post('/forgot-password', async (req, res) => {
             auth: {
                 user: 'tejdabhi84@gmail.com',
                 // Google App Password
-                pass: 'hkpujdpapebcgnpb'
+                pass: 'rfhzlioubgideruv'
             }
         })
         // Mail Options
