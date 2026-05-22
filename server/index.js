@@ -44,7 +44,11 @@ const EmployeeModel = require('./models/Employee.js')
 
 
 
-
+app.get("/", (req, res) => {
+    res.json({
+        message: "Backend is running"
+    })
+})
 // ================= REGISTER =================
 
 app.post('/register', async (req, res) => {
