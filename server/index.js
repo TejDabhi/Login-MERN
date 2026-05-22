@@ -36,9 +36,19 @@ app.use(cookieParser())
 
 
 // MongoDB Connection
+const PORT = process.env.PORT || 3001
+
 mongoose.connect("mongodb+srv://tej:tej123@cluster0.2lbv03r.mongodb.net/test")
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log("MongoDB Connection Error:", err.message))
+.then(() => {
+    console.log("MongoDB Connected")
+
+    app.listen(PORT, () => {
+        console.log(`Server Running on Port ${PORT}`)
+    })
+})
+.catch((err) => {
+    console.log("MongoDB Connection Error:", err.message)
+})
 // Model
 const EmployeeModel = require('./models/Employee.js')
 
@@ -320,10 +330,4 @@ app.get('/logout', (req, res) => {
 })
 
 
-// ================= SERVER =================
 
-const PORT = process.env.PORT || 3001
-
-app.listen(PORT, () => {
-    console.log(`Server Running on Port ${PORT}`)
-})
