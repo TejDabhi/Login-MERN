@@ -38,7 +38,7 @@ app.use(cookieParser())
 // MongoDB Connection
 mongoose.connect("mongodb+srv://tej:tej123@cluster0.2lbv03r.mongodb.net/test")
 .then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err))
+.catch(err => console.log("MongoDB Connection Error:", err.message))
 // Model
 const EmployeeModel = require('./models/Employee.js')
 
