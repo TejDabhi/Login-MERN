@@ -38,12 +38,29 @@ app.use(cookieParser())
 // MongoDB Connection
 const PORT = process.env.PORT || 3001
 
-mongoose.connect("mongodb+srv://tej:tej123@cluster0.2lbv03r.mongodb.net/test")
+const mongoURI = "mongodb+srv://tej:tej123@cluster0.2lbv03r.mongodb.net/test?retryWrites=true&w=majority"
+
+mongoose.connect(mongoURI, {
+    serverSelectionTimeoutMS: 5000,
+    family: 4
+})
 .then(() => {
     console.log("MongoDB Connected")
 })
 .catch((err) => {
-    console.log("MongoDB Connection Error:", err.message)
+    console.log("MongoDB Connection Error:", err)
+})
+
+mongoose.connection.on("connected", () => {
+    console.log("Mongoose connected to DB")
+})
+
+mongoose.connection.on("error", (err) => {
+    console.log("Mongoose connection error:", err)
+})
+
+mongoose.connection.on("disconnected", () => {
+    console.log("Mongoose disconnected")
 })
 // Model
 const EmployeeModel = require('./models/Employee.js')
