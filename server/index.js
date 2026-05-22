@@ -10,12 +10,24 @@ const app = express()
 
 
 
+const allowedOrigins = [
+    "https://login-mern-gray.vercel.app"
+]
+
 app.use(cors({
-    origin: "https://login-mern-gray.vercel.app",
-    methods:['GET','POST'],
-    credentials:true
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
 }))
 
+app.options("*", cors())
 app.use(express.json())
 app.use(cookieParser())
 
