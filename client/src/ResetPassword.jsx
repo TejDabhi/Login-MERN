@@ -12,7 +12,7 @@ const ResetPassword = () => {
 
         e.preventDefault()
 
-        axios.post(`http://localhost:3001/reset-password/${id}/${token}`, {
+        axios.post(`https://login-mern-nuwl.onrender.com/reset-password/${id}/${token}`, {
             password
         })
 
