@@ -27,7 +27,10 @@ app.use(cors({
     credentials: true
 }))
 
-app.options("*", cors())
+app.options(/.*/, cors({
+    origin: "https://login-mern-gray.vercel.app",
+    credentials: true
+}))
 app.use(express.json())
 app.use(cookieParser())
 
