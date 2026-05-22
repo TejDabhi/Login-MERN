@@ -9,7 +9,7 @@ const ForgotPassword = () => {
 
         e.preventDefault()
 
-        axios.post('http://localhost:3001/forgot-password', {
+        axios.post('https://login-mern-nuwl.onrender.com/forgot-password', {
             email
         })
 
