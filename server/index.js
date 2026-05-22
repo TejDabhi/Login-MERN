@@ -319,7 +319,11 @@ app.get('/home', verifyUser, (req, res) => {
 
 app.get('/logout', (req, res) => {
 
-    res.clearCookie('token')
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    })
 
     return res.json({
 
