@@ -110,7 +110,12 @@ app.post('/login', async (req, res) => {
             "mysecretkey",
             { expiresIn: "1d"}
         )
-        res.cookie('token',token,{httpOnly:true,maxAge:360000})
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            maxAge: 24 * 60 * 60 * 1000
+        })
         // Success Response
         res.status(200).json({
             message: "Login Successful",
