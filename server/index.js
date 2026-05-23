@@ -190,11 +190,12 @@ app.post('/login', async (req, res) => {
 // Forgot Password Route
 // ================= FORGOT PASSWORD =================
 
+// ================= FORGOT PASSWORD =================
+
 app.post('/forgot-password', async (req, res) => {
     const { email } = req.body
 
     try {
-        // Find user
         const user = await EmployeeModel.findOne({ email })
 
         if (!user) {
@@ -203,14 +204,12 @@ app.post('/forgot-password', async (req, res) => {
             })
         }
 
-        // Create reset token
         const token = jwt.sign(
             { id: user._id },
             "mysecretkey",
             { expiresIn: "1h" }
         )
 
-        // Gmail transporter
         const transporter = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 465,
@@ -221,10 +220,8 @@ app.post('/forgot-password', async (req, res) => {
             }
         })
 
-        // Reset password link
         const resetLink = `https://login-mern-gray.vercel.app/resetPassword/${user._id}/${token}`
 
-        // Mail content
         const mailOptions = {
             from: "tejdabhi84@gmail.com",
             to: email,
@@ -232,7 +229,6 @@ app.post('/forgot-password', async (req, res) => {
             text: `Click this link to reset your password: ${resetLink}`
         }
 
-        // Send mail
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                 console.log("EMAIL SEND ERROR:", error)
@@ -250,17 +246,15 @@ app.post('/forgot-password', async (req, res) => {
             })
         })
 
-    } .catch((err) => {
-        console.log("Forgot Password Error:", err)
-    
-        if (err.response) {
-            console.log("Backend Error:", err.response.data)
-            alert(err.response.data.error || err.response.data.message)
-        } else {
-            alert("Server Error")
-        }
-})
+    } catch (error) {
+        console.log("FORGOT PASSWORD ERROR:", error)
 
+        return res.status(500).json({
+            message: "Server Error",
+            error: error.message
+        })
+    }
+})
 // Reset Password Route
 app.post('/reset-password/:id/:token', async (req, res) => {
 
