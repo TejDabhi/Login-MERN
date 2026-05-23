@@ -250,14 +250,15 @@ app.post('/forgot-password', async (req, res) => {
             })
         })
 
-    } catch (error) {
-        console.log("FORGOT PASSWORD ERROR:", error)
-
-        return res.status(500).json({
-            message: "Server Error",
-            error: error.message
-        })
-    }
+    } .catch((err) => {
+        console.log("Forgot Password Error:", err)
+    
+        if (err.response) {
+            console.log("Backend Error:", err.response.data)
+            alert(err.response.data.error || err.response.data.message)
+        } else {
+            alert("Server Error")
+        }
 })
 
 // Reset Password Route
