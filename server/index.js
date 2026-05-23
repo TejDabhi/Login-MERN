@@ -188,66 +188,77 @@ app.post('/login', async (req, res) => {
 })
 
 // Forgot Password Route
+// ================= FORGOT PASSWORD =================
+
 app.post('/forgot-password', async (req, res) => {
     const { email } = req.body
+
     try {
-        // Find User
+        // Find user
         const user = await EmployeeModel.findOne({ email })
-        // User Not Found
+
         if (!user) {
             return res.status(400).json({
                 message: "User Not Registered"
             })
         }
-        // Create JWT Token
+
+        // Create reset token
         const token = jwt.sign(
-            {id: user._id},
+            { id: user._id },
             "mysecretkey",
-            {expiresIn: "1h"}
+            { expiresIn: "1h" }
         )
-        // Create Transporter
-        let transporter = nodemailer.createTransport({
-            service: 'gmail',
+
+        // Gmail transporter
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
             auth: {
-                user: 'tejdabhi84@gmail.com',
-                // Google App Password
-                pass: 'rfhzlioubgideruv'
+                user: "tejdabhi84@gmail.com",
+                pass: "rfhzlioubgideruv"
             }
         })
-        // Mail Options
-        let mailOptions = {
-            from: 'tejdabhi84@gmail.com',
+
+        // Reset password link
+        const resetLink = `https://login-mern-gray.vercel.app/resetPassword/${user._id}/${token}`
+
+        // Mail content
+        const mailOptions = {
+            from: "tejdabhi84@gmail.com",
             to: email,
-            subject: 'Reset Password',
-            // Send ID + Token
-            text: `https://login-mern-gray.vercel.app/resetPassword/${user._id}/${token}`
+            subject: "Reset Password",
+            text: `Click this link to reset your password: ${resetLink}`
         }
-        // Send Mail
-        transporter.sendMail(mailOptions, function (error, info) {
+
+        // Send mail
+        transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-                console.log(error)
+                console.log("EMAIL SEND ERROR:", error)
+
                 return res.status(500).json({
-                    message: "Error Sending Email"
-                })
-            } else {
-                console.log('Email sent: ' + info.response)
-                return res.status(200).json({
-                    message: "Reset Link Sent Successfully"
+                    message: "Error Sending Email",
+                    error: error.message
                 })
             }
+
+            console.log("Email sent:", info.response)
+
+            return res.status(200).json({
+                message: "Reset Link Sent Successfully"
+            })
         })
+
     } catch (error) {
+        console.log("FORGOT PASSWORD ERROR:", error)
 
-        console.log(error)
-
-        res.status(500).json({
-            message: "Server Error"
+        return res.status(500).json({
+            message: "Server Error",
+            error: error.message
         })
-
     }
-
 })
-
 
 // Reset Password Route
 app.post('/reset-password/:id/:token', async (req, res) => {
