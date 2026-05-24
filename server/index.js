@@ -187,10 +187,7 @@ app.post('/login', async (req, res) => {
     }
 })
 
-// Forgot Password Route
-// ================= FORGOT PASSWORD =================
-
-// ================= FORGOT PASSWORD =================
+// ================= FORGOT PASSWORD WITHOUT NODEMAILER =================
 
 app.post('/forgot-password', async (req, res) => {
     const { email } = req.body
@@ -210,40 +207,11 @@ app.post('/forgot-password', async (req, res) => {
             { expiresIn: "1h" }
         )
 
-        const transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 465,
-            secure: true,
-            auth: {
-                user: "tejdabhi84@gmail.com",
-                pass: "rfhzlioubgideruv"
-            }
-        })
-
         const resetLink = `https://login-mern-gray.vercel.app/resetPassword/${user._id}/${token}`
 
-        const mailOptions = {
-            from: "tejdabhi84@gmail.com",
-            to: email,
-            subject: "Reset Password",
-            text: `Click this link to reset your password: ${resetLink}`
-        }
-
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.log("EMAIL SEND ERROR:", error)
-
-                return res.status(500).json({
-                    message: "Error Sending Email",
-                    error: error.message
-                })
-            }
-
-            console.log("Email sent:", info.response)
-
-            return res.status(200).json({
-                message: "Reset Link Sent Successfully"
-            })
+        return res.status(200).json({
+            message: "Reset link generated successfully",
+            resetLink: resetLink
         })
 
     } catch (error) {
