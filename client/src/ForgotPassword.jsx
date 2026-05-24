@@ -12,30 +12,22 @@ const ForgotPassword = () => {
         axios.post('https://login-mern-nuwl.onrender.com/forgot-password', {
             email
         })
-
         .then((res) => {
-
             alert(res.data.message)
 
+            if (res.data.resetLink) {
+                window.location.href = res.data.resetLink
+            }
         })
-
         .catch((err) => {
-
             console.log(err)
 
-            // Backend Error
             if (err.response) {
-
-                alert(err.response.data.message)
-
+                alert(err.response.data.error || err.response.data.message)
             } else {
-
                 alert("Server Error")
-
             }
-
         })
-
     }
 
     return (
@@ -50,7 +42,6 @@ const ForgotPassword = () => {
 
                 <form className="space-y-5" onSubmit={handleSubmit}>
 
-                    {/* Email */}
                     <div>
 
                         <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -68,12 +59,11 @@ const ForgotPassword = () => {
 
                     </div>
 
-                    {/* Button */}
                     <button
                         type="submit"
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-300"
                     >
-                        Send Reset Link
+                        Generate Reset Link
                     </button>
 
                 </form>
