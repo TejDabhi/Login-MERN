@@ -22,6 +22,7 @@ const ResetPassword = () => {
 
             // Correct Field
             alert(res.data.status)
+            navigate('/login')
 
         })
 
