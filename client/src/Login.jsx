@@ -30,42 +30,44 @@ const Login = () => {
 
   }, [])
 
-  const handleSubmit = (e) => {
+const handleSubmit = (e) => {
 
     e.preventDefault()
 
     axios.post('https://login-mern-nuwl.onrender.com/login', {
-      email,
-      password
+        email,
+        password
+    }, {
+        withCredentials: true
     })
 
-      .then((res) => {
+    .then((res) => {
 
         alert(res.data.message)
 
         if (res.data.user) {
 
-          navigate('/home')
+            navigate('/home')
 
         }
 
-      })
+    })
 
-      .catch((err) => {
+    .catch((err) => {
 
         if (err.response) {
 
-          alert(err.response.data.message)
+            alert(err.response.data.message)
 
         } else {
 
-          alert("Server Error")
+            alert("Server Error")
 
         }
 
-      })
+    })
 
-  }
+}
 
   return (
 
